@@ -27,4 +27,40 @@ function checkStringLength(string, maxLength) {
 }
 
 checkStringLength();
-getRandomInt();
+
+let lastId = 0;
+
+const DESCRIPTIONS = [
+  'Мой котик',
+  'Моя собачка',
+  'Мы с семьей',
+  'Вчерашняя прогулка',
+  'Встретились с друзьями',
+  'Мой ужин',
+  'Мой завтрак'
+];
+
+const createPhotoDetalization = () => {
+  lastId++;
+  return {
+    id: lastId,
+    url: `photos/${lastId}.jpg`,
+    description: DESCRIPTIONS[getRandomInt(0, DESCRIPTIONS.length - 1)],
+    likes: getRandomInt(15, 200),
+    comments: getRandomInt(0, 200)
+  };
+};
+
+// Создавая итоговый массив, мы изменяем lastId. Таким образом, если мы поптыемся создать
+// еще один массив тем же билдером createPhotoDetalization, то в нем id не будут начинаться с 1,
+// их перечисление продолжится из состояния после создания первого масива. При необходимости,
+// можно переприсваивать lastId = 0, чтобы во всех массивах начальный id был равен 1.
+
+const photoDetalizations = Array.from({length: 25}, createPhotoDetalization);
+
+// Для проверки выведем полученный массив на консоль. Eslint на этом моменте выдает ошибку,
+// будем ее игнорировать, так в коде все работает корректно.
+
+/* eslint-disable no-console */
+console.log(photoDetalizations);
+/* eslint-enable no-console */
